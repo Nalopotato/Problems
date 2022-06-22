@@ -4,7 +4,8 @@
 //Fib();
 //PrimeFactor();
 //Palindrome();
-SmallestMultiple();
+//SmallestMultiple();
+SumSquareDiff();
 
 
 // Find the sum of all the multiples of 3 or 5 below 1000
@@ -148,8 +149,28 @@ void SmallestMultiple()
         }
         else
         {
-            Console.WriteLine($"You win! Result: " + num);
+            Console.WriteLine($"You win! Result: {num}");
             break;
         }
     }
+}
+
+
+//Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum
+//Result: 24174150
+void SumSquareDiff()
+{
+    var sumOfSquares = 0;
+    var squareOfSum = 0;
+
+    for (int i = 1; i <= 100; i++)
+    {
+        sumOfSquares += i * i;
+        squareOfSum += i;
+        Console.WriteLine(i);
+    }
+
+    squareOfSum *= squareOfSum;
+
+    Console.WriteLine($"Sum of Squares: {sumOfSquares} ___ Square of the sum: {squareOfSum} ___ Difference: {squareOfSum - sumOfSquares}");
 }
