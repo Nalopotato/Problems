@@ -4,7 +4,7 @@
 //Fib();
 //PrimeFactor();
 //Palindrome();
-SmallestMultiple(20, 20);
+SmallestMultiple();
 
 
 // Find the sum of all the multiples of 3 or 5 below 1000
@@ -126,27 +126,30 @@ void Palindrome()
  * Iterate
  */
 
-void SmallestMultiple(int num, int divisor)
+//Attempted a recursive call at first - that was a no go, with a Stack Overflow exception
+//A simple while loop that breaks on success seems to do the trick.  Result: 232792560
+
+void SmallestMultiple()
 {
-    if (divisor < 1)
-        divisor = 20; //Initialize to 20
-    if (num < 1)
-        num = 20; //Initialize to 20 for simplicity, even though it will succeed on first iteration
+    int num = 20;
+    int divisor = 20;
 
-    if (divisor > 1)
+    while (true)
     {
-        if ((num % divisor) == 0)
-            SmallestMultiple(num, divisor - 1);
+        if (divisor > 1)
+        {
+            if ((num % divisor) == 0)
+                divisor--;
+            else
+            {
+                num++;
+                divisor = 20;
+            }
+        }
         else
-            SmallestMultiple(num + 1, 20);
+        {
+            Console.WriteLine($"You win! Result: " + num);
+            break;
+        }
     }
-    else
-    {
-        Console.WriteLine($"You win! Result: " + num);
-    }
-
-    //for (var i = 20; result < 1; i++)
-    //{
-
-    //}
 }
