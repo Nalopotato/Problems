@@ -1,9 +1,10 @@
-﻿
+﻿//https://projecteuler.net/archives
+
 //Multiples();
 //Fib();
 //PrimeFactor();
 //Palindrome();
-SmallestMultiple();
+SmallestMultiple(20, 20);
 
 
 // Find the sum of all the multiples of 3 or 5 below 1000
@@ -116,7 +117,36 @@ void Palindrome()
 
 //What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
 //Ex: 2520 is the smallest number divisible by all numbers from 1 to 10
-void SmallestMultiple()
-{
 
+/* 
+ * Start at 20 and work backwards - might be more optimal to start with 19, or 17, etc. but that's fancy
+ * Test if divisible by the divisor
+ * If success, keep same number, decrement the divisor
+ * If failure, increment number, return the divisor to 20 if it's not
+ * Iterate
+ */
+
+void SmallestMultiple(int num, int divisor)
+{
+    if (divisor < 1)
+        divisor = 20; //Initialize to 20
+    if (num < 1)
+        num = 20; //Initialize to 20 for simplicity, even though it will succeed on first iteration
+
+    if (divisor > 1)
+    {
+        if ((num % divisor) == 0)
+            SmallestMultiple(num, divisor - 1);
+        else
+            SmallestMultiple(num + 1, 20);
+    }
+    else
+    {
+        Console.WriteLine($"You win! Result: " + num);
+    }
+
+    //for (var i = 20; result < 1; i++)
+    //{
+
+    //}
 }
