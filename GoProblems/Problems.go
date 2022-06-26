@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"math"
+	"strconv"
+	"time"
 )
 
 //VSCode shortcuts:
@@ -11,18 +12,20 @@ import (
 //Shift + Alt + Down (Duplicate line)
 
 func main() {
+	start := time.Now()
+
 	//Multiples()
 	//Fib()
-	PrimeFactor()
-	//Palindrome()
+	//PrimeFactor()
+	Palindrome()
 	//SmallestMultiple()
 	//SumSquareDiff()
 
-	//SDG()
+	fmt.Printf("***** %v ***** \n", time.Since(start))
 }
 
 // Find the sum of all the multiples of 3 or 5 below 1000
-//Result: 233168
+//Result: 233168.  About 70ms
 func Multiples() {
 	sum := 0
 
@@ -35,7 +38,7 @@ func Multiples() {
 }
 
 //Find the sum of the even numbers of the Fibonacci output, under 4 million
-//Result: 4613732
+//Result: 4613732.  About 1ms
 func Fib() {
 	sum := 0
 	fibOld := 1
@@ -54,22 +57,22 @@ func Fib() {
 }
 
 //What is the largest prime factor of the number 600851475143
+//I still don't fully understand this one, but that's fine
+//Result: 71, 839, 1471, 6857.  About 4ms
 func PrimeFactor() {
-	var result uint64 = 1
-	var number uint64 = 600851475143
-	var i uint64
+	result := 1
+	number := 600851475143
+	x := number
 
-	for i = 2; i*i <= number; i++ {
-		/* for number%2 == 0 {
-			number /= 2
-		} */
-
+	for i := 3; i*i <= number; i += 2 {
 		//fmt.Printf("%v ,", i) 775146 -> Sqrt of 600851475143
 
-		if number%i == 0 {
-			result = i
-			fmt.Println(result)
-			//Killed the process after 10 minutes. Will take some further understanding to optimize
+		if x%i == 0 {
+			if i > result {
+				result = i
+				fmt.Println(result)
+			}
+			x /= i
 		}
 	}
 }
@@ -78,7 +81,48 @@ func PrimeFactor() {
 //Ex: The largest from 2-digit numbers is 91x99 = 9009
 //Result: 924x932 = 861168
 func Palindrome() {
-	panic("unimplemented")
+	result := 0
+
+	for i := 999; i > 0; i-- {
+		for k := i; k <= 999; k++ {
+			/*
+				timer1 := time.NewTimer(100 * time.Millisecond)
+				<-timer1.C
+				fmt.Printf("i: %v ___ k: %v \n", i, k)
+			*/
+
+			num := i * k
+			start := ""
+			end := ""
+			endFlip := ""
+			numStr := strconv.Itoa(num)
+
+			var x float64 = float64(len(numStr)) / 2 //Split in half
+
+			if len(numStr)%2 > 0 {
+				x += 0.5              //If it's an odd number of chars, shift right 1
+				end = numStr[int(x):] //Start AFTER the middle character, and end at the end of the string
+			} else {
+				end = numStr[int(x):] //Start at the first character on the right half, and end at the end of the string
+			}
+
+			start = numStr[:int(x)]
+
+			for _, c := range end { //Equivalent to "foreach (var c in end)" in C#.  "index" is unused, though, so we use an underscore instead
+				endFlip = string(c) + endFlip
+			}
+
+			if start == endFlip {
+				result = num
+				fmt.Printf("i: %v __ k: %v __ result: %v \n", i, k, result)
+				break
+			}
+		}
+
+		if result > 0 {
+			break
+		}
+	}
 }
 
 //What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
@@ -91,35 +135,4 @@ func SmallestMultiple() {
 //Result: 25164150
 func SumSquareDiff() {
 	fmt.Println("SumSquareDiff")
-}
-
-func SDG() int {
-	x := 600851475143
-	c := x
-	prime := 2
-
-	// divide original number by 2 as many times as possible to eliminate
-	// prime number 2 and all evens
-	for c%2 == 0 {
-		c /= 2
-	}
-
-	// all occurrences of 2 are eliminated; start with the next prime, 3
-	// limit is sqrt of x because that is the largest possible factor
-	// iterate by 2 to traverse odd numbers since we have eliminated all evens
-	for i := 3; i <= int(math.Sqrt(float64(x))); i += 2 {
-		for c%i == 0 {
-			if i > prime {
-				prime = i
-			}
-			c /= i
-		}
-	}
-
-	if c > prime {
-		prime = c
-	}
-
-	fmt.Printf("%v\n", prime)
-	return 1
 }
