@@ -2,13 +2,14 @@
 
 //Multiples();
 //Fib();
-//PrimeFactor();
+PrimeFactor();
 //Palindrome();
 //SmallestMultiple();
-SumSquareDiff();
+//SumSquareDiff();
 
 
 // Find the sum of all the multiples of 3 or 5 below 1000
+//Result: 233168
 void Multiples()
 {
     var sum = 0;
@@ -25,6 +26,7 @@ void Multiples()
 
 
 //Find the sum of the even numbers of the Fibonacci output, under 4 million
+//Result: 4613732
 void Fib()
 {
     var sum = 0;
@@ -46,18 +48,16 @@ void Fib()
 }
 
 
-//What is the largest prime factor of the number 600851475143 -> O(n log log n)
+//What is the largest prime factor of 600851475143
 void PrimeFactor()
 {
-    long result = 1;
     long number = 600851475143;
 
-    for (int i = 2; i * i <= number; i++)
+    for (int i = 2; i * i <= number; i++)  //For some reason, i*i is not working here.  It surpasses the Sqrt and just continues running
     {
         if (number % i == 0)
         {
-            result = i;
-            Console.WriteLine(result);
+            Console.WriteLine(i);
             //Killed the process after 10 minutes. Will take some further understanding to optimize
         }
     }
@@ -157,7 +157,7 @@ void SmallestMultiple()
 
 
 //Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum
-//Result: 24174150
+//Result: 25164150
 void SumSquareDiff()
 {
     var sumOfSquares = 0;
@@ -167,7 +167,6 @@ void SumSquareDiff()
     {
         sumOfSquares += i * i;
         squareOfSum += i;
-        Console.WriteLine(i);
     }
 
     squareOfSum *= squareOfSum;
