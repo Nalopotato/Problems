@@ -17,7 +17,7 @@ func main() {
 	//Multiples()
 	//Fib()
 	//PrimeFactor()
-	Palindrome()
+	//Palindrome()
 	//SmallestMultiple()
 	//SumSquareDiff()
 
@@ -108,7 +108,7 @@ func Palindrome() {
 
 			start = numStr[:int(x)]
 
-			for _, c := range end { //Equivalent to "foreach (var c in end)" in C#.  "index" is unused, though, so we use an underscore instead
+			for _, c := range end { //Equivalent to "foreach (var c in end)" in C#.  "index" is unused though, so we use an underscore instead
 				endFlip = string(c) + endFlip
 			}
 
@@ -127,12 +127,39 @@ func Palindrome() {
 
 //What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
 //Ex: 2520 is the smallest number divisible by all numbers from 1 to 10
+//Result: 232792560
 func SmallestMultiple() {
-	panic("unimplemented")
+	num := 20
+	divisor := 20
+
+	for {
+		if divisor > 1 {
+			if (num % divisor) == 0 {
+				divisor--
+			} else {
+				num++
+				divisor = 20
+			}
+		} else {
+			fmt.Printf("You win! Result: %v \n", num)
+			break
+		}
+	}
 }
 
 //Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum
 //Result: 25164150
 func SumSquareDiff() {
-	fmt.Println("SumSquareDiff")
+	sumOfSquares := 0
+	squareOfSum := 0
+
+	for i := 1; i <= 100; i++ {
+		sumOfSquares += i * i
+		squareOfSum += i
+	}
+
+	squareOfSum *= squareOfSum
+	diff := squareOfSum - sumOfSquares
+
+	fmt.Printf("Sum of Squares: %v ___ Square of the sum: %v ___ Difference: %v \n", sumOfSquares, squareOfSum, diff)
 }
